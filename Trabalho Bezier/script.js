@@ -376,6 +376,17 @@ async function main() {
   `;
 
   // Testeeee Inicio
+  // var objects = [
+  //   sunNode,
+  //   earthNode,
+  //   moonNode,
+  // ];
+
+  // var objectsToDraw = [
+  //   sunNode.drawInfo,
+  //   earthNode.drawInfo,
+  //   moonNode.drawInfo,
+  // ];
 
   var sliderPositions = {
     X: 0,
@@ -386,53 +397,79 @@ async function main() {
     tempo: 0
   }
 
-  const points = {
-    P0: [10, 0, 26],
-    P1: [2, 0, 23],
-    P2: [2, 0, 9],
-    P3: [8, -5, 2], // controle
-    P4: [14, -10, -5],
-    P5: [8, -5, -15],
-    P6: [0, -5, -15], // controle
-    P7: [-7, -5, -15],
-    P8: [-18, -10, -11],
-    P9: [-24, -15, 3], // controle
-    P10: [-29, -20, 18],
-    P11: [-21, -15, 39],
-    P12: [-8, -10, 22],
-  };
-
+  // 10xvalor
   // const points = {
-  //   P0: [-27, 0, -18],
-  //   P1: [-50, 0, 20],
-  //   P2: [-8, 0, 32],
-  //   P3: [9, -4, 2], // controle
-  //   P4: [28, 35, -28],
-  //   P5: [33, -36, -3],
-  //   P6: [17, -10, -22], // controle
-  //   P7: [0, -3, -40],
-  //   P8: [19, 7, -33],
-  //   P9: [-18, -11, -19], // controle
-  //   P10: [-60, 16, 0],
-  //   P11: [-44, -9, 31],
-  //   P12: [-17, 0, 15],
+  //   P0: [10, 0, 26],
+  //   P1: [2, 0, 23],
+  //   P2: [2, 0, 9],
+  //   P3: [8, -5, 2], // controle
+  //   P4: [14, -10, -5],
+  //   P5: [8, -5, -15],
+  //   P6: [0, -5, -15], // controle
+  //   P7: [-7, -5, -15],
+  //   P8: [-18, -10, -11],
+  //   P9: [-24, -15, 3], // controle
+  //   P10: [-29, -20, 18],
+  //   P11: [-21, -15, 39],
+  //   P12: [-8, -10, 22],
   // };
 
+  // const secondObjPoints = {
+  //   P0: [100, 25, -90],
+  //   P1: [-20, 0, -50],
+  //   P2: [-90, 0, -10],
+  //   P3: [30, 15, 20],
+  // };
+
+  const points = {
+    P0: [100, 0, 260],
+    P1: [20, 0, 230],
+    P2: [20, 0, 90],
+    P3: [80, -50, 20], // controle
+    P4: [140, -100, -50],
+    P5: [80, -50, -150],
+    P6: [0, -50, -150], // controle
+    P7: [-70, -50, -150],
+    P8: [-180, -100, -110],
+    P9: [-240, -150, 30], // controle
+    P10: [-290, -200, 180],
+    P11: [-210, -150, 390],
+    P12: [-80, -100, 220],
+  };
+
+  const secondObjPoints = {
+    P0: [1000, 250, -900],
+    P1: [-200, 0, -500],
+    P2: [-900, 0, -100],
+    P3: [300, 150, 200],
+  };
+
+  function secondCalculatePoint(secondObjPoints, t) {
+    const startIndex = 0;
+    const X = secondObjPoints[`P${startIndex}`];
+    const Y = secondObjPoints[`P${startIndex + 1}`];
+    const Z = secondObjPoints[`P${startIndex + 2}`];
+    const W = secondObjPoints[`P${startIndex + 3}`];
+
+    const A = X.map((coord, index) => coord + t * (Y[index] - coord));
+    const B = Y.map((coord, index) => coord + t * (Z[index] - coord));
+    const C = Z.map((coord, index) => coord + t * (W[index] - coord));
+
+    const AB = A.map((coord, index) => coord + t * (B[index] - coord));
+    const BC = B.map((coord, index) => coord + t * (C[index] - coord));
+
+    const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
+
+    // return ABC.map(element => 10* + element);
+    return ABC;
+  }
+
   function calculatePoint(points, t) {
-    // for (let j = 0; j < 4; j++) {
-    //     const A = points.P0.map((coord, index) => coord + t * (points.P1[index] - coord));
-    //     const B = points.P1.map((coord, index) => coord + t * (points.P2[index] - coord));
-    //     const C = points.P2.map((coord, index) => coord + t * (points.P3[index] - coord));
-
-    //     const AB = A.map((coord, index) => coord + t * (B[index] - coord));
-    //     const BC = B.map((coord, index) => coord + t * (C[index] - coord));
-
-    //     const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
-
-    //     return ABC.map(element => 10* + element);;
-    // }
     if (t <= 0.25) {
       t *= 4;
+      if (t==1) {
+        t-= 0.001;
+      }
       const startIndex = 0;
       const X = points[`P${startIndex}`];
       const Y = points[`P${startIndex + 1}`];
@@ -448,10 +485,13 @@ async function main() {
 
       const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-      return ABC.map(element => 10* + element);
+      return ABC;
     } else if (t > 0.25 && t <= 0.5) {
       t -= 0.25;
       t *= 4;
+      if (t==1) {
+        t-= 0.001;
+      }
       const startIndex = 3;
       const X = points[`P${startIndex}`];
       const Y = points[`P${startIndex + 1}`];
@@ -467,10 +507,13 @@ async function main() {
 
       const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-      return ABC.map(element => 10* + element);
+      return ABC;
     } else if (t > 0.5 && t <= 0.75) {
       t -= 0.5;
       t *= 4;
+      if (t==1) {
+        t-= 0.001;
+      }
       const startIndex = 6;
       const X = points[`P${startIndex}`];
       const Y = points[`P${startIndex + 1}`];
@@ -486,10 +529,13 @@ async function main() {
 
       const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-      return ABC.map(element => 10* + element);
+      return ABC;
     } else {
       t -= 0.75;
       t *= 4;
+      if (t==1) {
+        t-= 0.001;
+      }
       const startIndex = 9;
       const X = points[`P${startIndex}`];
       const Y = points[`P${startIndex + 1}`];
@@ -505,7 +551,7 @@ async function main() {
 
       const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-      return ABC.map(element => 10* + element);
+      return ABC;
     }
   }
 
@@ -513,7 +559,7 @@ async function main() {
     return vector.map(element => - + element);
   }
 
-  function calculateTangent(points, t, p) {
+  function calculateTangent(points, t) {
     // const i = t;
     if (t <= 0.25) {
       t *= 4;
@@ -530,12 +576,12 @@ async function main() {
       const AB = A.map((coord, index) => coord + t * (B[index] - coord));
       const BC = B.map((coord, index) => coord + t * (C[index] - coord));
 
-      return BC.map(element => 10* + element);
+      return BC;
       
       // if (i > p) {
-      //   return BC.map(element => 10* + element);
+      //   return BC;
       // } else {
-      //   return AB.map(element => 10* + element);
+      //   return AB;
       // }
     } else if (t > 0.25 && t <= 0.5) {
       t -= 0.25;
@@ -553,7 +599,7 @@ async function main() {
       const AB = A.map((coord, index) => coord + t * (B[index] - coord));
       const BC = B.map((coord, index) => coord + t * (C[index] - coord));
 
-      return BC.map(element => 10* + element);
+      return BC;
     } else if (t > 0.5 && t <= 0.75) {
       t -= 0.5;
       t *= 4;
@@ -570,7 +616,7 @@ async function main() {
       const AB = A.map((coord, index) => coord + t * (B[index] - coord));
       const BC = B.map((coord, index) => coord + t * (C[index] - coord));
 
-      return BC.map(element => 10* + element);
+      return BC;
     } else {
       t -= 0.75;
       t *= 4;
@@ -587,49 +633,9 @@ async function main() {
       const AB = A.map((coord, index) => coord + t * (B[index] - coord));
       const BC = B.map((coord, index) => coord + t * (C[index] - coord));
 
-      return BC.map(element => 10* + element);
+      return BC;
     }
   }
-
-  // function startCameraAnimation() {
-  //   let startTime = null;
-
-  //   function animate(timestamp) {
-  //     if (!startTime) startTime = timestamp;
-  //     const elapsedTime = timestamp - startTime;
-
-  //     if (elapsedTime >= animationDuration) {
-  //       // Animation complete, stop here
-  //       return;
-  //     }
-
-  //     updateCameraPosition(elapsedTime);
-
-  //     requestAnimationFrame(animate);
-  //   }
-
-  //   requestAnimationFrame(animate);
-  // }
-
-  // function stopCameraAnimation() {
-  //   let stopTime = null;
-
-  //   function stopAnimate(timestamp) {
-  //     if (!stopTime) stopTime = timestamp;
-  //     const elapsedTime = timestamp - stopTime;
-
-  //     if (elapsedTime >= animationDuration) {
-  //       // Animation complete, stop here
-  //       return;
-  //     }
-
-  //     updateCameraPosition(elapsedTime);
-
-  //     requestAnimationFrame(stopAnimate);
-  //   }
-
-  //   requestAnimationFrame(stopAnimate);
-  // }
   // Testeeee Final
 
   // webglLessonsUI.setupSlider("#x", {slide: updatePosition(0), min:-500, max: 500});
@@ -643,15 +649,14 @@ async function main() {
   //   };
   // }
 
-  webglLessonsUI.setupSlider("#r", {min: 0, max: 0.999, step: 0.001, precision: 3});
+  webglLessonsUI.setupSlider("#r", {min: 0, max: 1, step: 0.001, precision: 3});
   webglLessonsUI.setupSlider("#tempo", {min: 0, max: 60, step: 0.1, precision: 1});
 
 
   // compiles and links the shaders, looks up attribute and uniform locations
   const meshProgramInfo = twgl.createProgramInfo(gl, [vs, fs]);
 
-  // const objHref = 'https://webgl2fundamentals.org/webgl/resources/models/windmill/windmill.obj';
-  const objHref = './source/island.obj';
+  const objHref = './source/Island/island.obj';
   const response = await fetch(objHref);
   const text = await response.text();
   const obj = parseOBJ(text);
@@ -682,6 +687,38 @@ async function main() {
         material[key] = texture;
       });
   }
+
+  //Test sec
+  // const secondObjHref = './source/Helicopter-Yellow/EuroCompter.obj';
+  const secondObjHref = './source/Drone/drone.obj';
+  const secondObjResponse = await fetch(secondObjHref);
+  const secondObjText = await secondObjResponse.text();
+  const secondObj = parseOBJ(secondObjText);
+  const secondBaseHref = new URL(secondObjHref, window.location.href);
+  const secondMatTexts = await Promise.all(
+      secondObj.materialLibs.map(async (filename) => {
+          const matHref = new URL(filename, secondBaseHref).href;
+          const response = await fetch(matHref);
+          return await response.text();
+      })
+  );
+
+  const secondMaterials = parseMTL(secondMatTexts.join("\n"));
+
+  for (const material of Object.values(secondMaterials)) {
+      Object.entries(material)
+          .filter(([key]) => key.endsWith("Map"))
+          .forEach(([key, filename]) => {
+              let texture = textures[filename];
+              if (!texture) {
+                  const textureHref = new URL(filename, secondBaseHref).href;
+                  texture = twgl.createTexture(gl, { src: textureHref, flipY: true });
+                  textures[filename] = texture;
+              }
+              material[key] = texture;
+          });
+  }
+  //test
 
   // hack the materials so we can see the specular map
   Object.values(materials).forEach(m => {
@@ -755,6 +792,51 @@ async function main() {
     };
   });
 
+  //test sec
+  const secondParts = secondObj.geometries.map(({material, data}) => {
+    if (data.color) {
+      if (data.position.length === data.color.length) {
+        // it's 3. The our helper library assumes 4 so we need
+        // to tell it there are only 3.
+        data.color = { numComponents: 3, data: data.color };
+      }
+    } else {
+      // there are no vertex colors so just use constant white
+      data.color = { value: [1, 1, 1, 1] };
+    }
+
+    // generate tangents if we have the data to do so.
+    if (data.texcoord && data.normal) {
+      data.tangent = generateTangents(data.position, data.texcoord);
+    } else {
+      // There are no tangents
+      data.tangent = { value: [1, 0, 0] };
+    }
+
+    if (!data.texcoord) {
+      data.texcoord = { value: [0, 0] };
+    }
+
+    if (!data.normal) {
+      // we probably want to generate normals if there are none
+      data.normal = { value: [0, 0, 1] };
+    }
+
+    // create a buffer for each array by calling
+    // gl.createBuffer, gl.bindBuffer, gl.bufferData
+    const bufferInfo = twgl.createBufferInfoFromArrays(gl, data);
+    const vao = twgl.createVAOFromBufferInfo(gl, meshProgramInfo, bufferInfo);
+    return {
+        material: {
+            ...defaultMaterial,
+            ...secondMaterials[material],
+        },
+        bufferInfo,
+        vao,
+    };
+  });
+  //test
+
   function getExtents(positions) {
     const min = positions.slice(0, 3);
     const max = positions.slice(0, 3);
@@ -788,6 +870,8 @@ async function main() {
   sliderPositions.R = document.querySelector('#r .gman-widget-value').textContent;
   sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
 
+  sliderPositions.T = sliderPositions.R;
+
   //sliders
 
   const extents = getGeometriesExtents(obj.geometries);
@@ -798,16 +882,12 @@ async function main() {
         extents.min,
         m4.scaleVector(range, 0.5)),
       -1);
-  const cameraTarget = [0, 0, 0];
+  const cameraTarget = calculateTangent(points, sliderPositions.R);
   // figure out how far away to move the camera so we can likely
   // see the object.
   // const radius = m4.length(range) * 0.5;
-  // const cameraPosition = m4.addVectors(cameraTarget, [
-  //   10,
-  //   0,
-  //   radius,
-  // ]);
-  const cameraPosition = [0, 0, 0];
+  const cameraPosition = m4.addVectors(cameraTarget, calculatePoint(points, sliderPositions.R));
+  // const cameraPosition = calculatePoint(points, sliderPositions.R);
   // Set zNear and zFar to something hopefully appropriate
   // for the size of this object.
   // const zNear = radius / 100;
@@ -820,6 +900,15 @@ async function main() {
     return deg * Math.PI / 180;
   }
 
+  function updatePosition() {
+    // const cameraTarget = calculateTangent(points, r);
+    const cameraPosition = calculatePoint(points, sliderPositions.R);
+    // return cameraPosition;
+    // requestAnimationFrame(render);
+  }
+
+  let secondObjTime = 0;
+
   function render(time) {
     time *= 0.001;  // convert to seconds
 
@@ -831,14 +920,15 @@ async function main() {
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     const projection = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
 
-    if (sliderPositions.T != sliderPositions.R) {
-      sliderPositions.T = sliderPositions.R;
-    };
-    
+    // if (sliderPositions.T != sliderPositions.R) {
+    //   sliderPositions.T = sliderPositions.R;
+    // };
+
     sliderPositions.R = document.querySelector('#r .gman-widget-value').textContent;
     sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
-    const cameraTarget = calculateTangent(points, sliderPositions.R, sliderPositions.T);
+    const cameraTarget = calculateTangent(points, sliderPositions.R);
     const cameraPosition = calculatePoint(points, sliderPositions.R);
+    // const cadeiraPosition = calculatePoint(points, sliderPositions.R);
 
     const up = [0, 1, 0];
     // Compute the camera's matrix using look at.
@@ -874,6 +964,45 @@ async function main() {
       // calls gl.drawArrays or gl.drawElements
       twgl.drawBufferInfo(gl, bufferInfo);
     }
+
+    //Teste sec
+    secondObjTime += 0.01;
+
+    // const extents = getGeometriesExtents(obj.geometries);
+    // const range = m4.subtractVectors(extents.max, extents.min);
+    // // amount to move the object so its center is at the origin
+    // const objOffset = m4.scaleVector(
+    //   m4.addVectors(
+    //     extents.min,
+    //     m4.scaleVector(range, 0.5)),
+    // -1);
+
+    // Render the second object
+    for (const { bufferInfo, vao, material } of secondParts) {
+      const scaledUWorld = m4.scale(u_world, 1, 1, 1);
+      // const xOffset = Math.sin(secondObjTime) * 35;
+      // const xOffset = addNegativeValues(secondCalculatePoint(secondObjPoints, sliderPositions.R));
+      const xOffset = secondCalculatePoint(secondObjPoints, sliderPositions.R);
+      const initialX = 80; // Coloque um valor aqui para ajustar a posição ao longo do eixo X
+      const initialY = 60; // Coloque um valor aqui para ajustar a posição ao longo do eixo Y
+      // const initialZ = 220; // Coloque um valor aqui para ajustar a posição ao longo do eixo Z
+      // -8, -10, 22 | [10, 0, 26];
+
+
+      // const translatedUWorld = m4.translate(scaledUWorld, initialX, initialY, xOffset);
+      const translatedUWorld = m4.translate(scaledUWorld, ...xOffset);
+
+      gl.bindVertexArray(vao);
+      twgl.setUniforms(
+          meshProgramInfo,
+          {
+              u_world: translatedUWorld,
+          },
+          material
+      );
+      twgl.drawBufferInfo(gl, bufferInfo);
+    }
+    //TESTE
 
     // // Start animation button
     // const startAnimateButton = document.getElementById("startAnimateButton");
