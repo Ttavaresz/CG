@@ -375,19 +375,6 @@ async function main() {
   }
   `;
 
-  // Testeeee Inicio
-  // var objects = [
-  //   sunNode,
-  //   earthNode,
-  //   moonNode,
-  // ];
-
-  // var objectsToDraw = [
-  //   sunNode.drawInfo,
-  //   earthNode.drawInfo,
-  //   moonNode.drawInfo,
-  // ];
-
   var sliderPositions = {
     X: 0,
     Y: 0,
@@ -396,22 +383,6 @@ async function main() {
     T: 0,
     tempo: 0
   }
-
-  // const points = {
-  //   P0: [100, 0, 260],
-  //   P1: [20, 0, 230],
-  //   P2: [20, 0, 90],
-  //   P3: [80, -50, 20], // controle
-  //   P4: [140, -100, -50],
-  //   P5: [80, -50, -150],
-  //   P6: [0, -50, -150], // controle
-  //   P7: [-70, -50, -150],
-  //   P8: [-180, -100, -110],
-  //   P9: [-240, -150, 30], // controle
-  //   P10: [-290, -200, 180],
-  //   P11: [-210, -150, 390],
-  //   P12: [-80, -100, 220],
-  // };
 
   const points = {
     P0: [100, 0, 260],
@@ -436,13 +407,6 @@ async function main() {
     P3: [300, 150, 200],
   };
 
-  // const thirdObjPoints = {
-  //   P0: [-125, 0, 200],
-  //   P1: [-100, 0, 100],
-  //   P2: [-75, 0, 0],
-  //   P3: [-50, 10, -100],
-  // };
-
   const thirdObjPoints = {
     P0: [-50, 20, 30],
     P1: [-60, 10, 100],
@@ -466,7 +430,6 @@ async function main() {
 
     const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-    // return ABC.map(element => 10* + element);
     return ABC;
   }
 
@@ -486,7 +449,6 @@ async function main() {
 
     const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
-    // return ABC.map(element => 5* + element);
     return ABC;
   }
 
@@ -586,7 +548,6 @@ async function main() {
   }
 
   function calculateTangent(points, t) {
-    // const i = t;
     if (t <= 0.25) {
       t *= 4;
       const startIndex = 0;
@@ -603,12 +564,6 @@ async function main() {
       const BC = B.map((coord, index) => coord + t * (C[index] - coord));
 
       return BC;
-      
-      // if (i > p) {
-      //   return BC;
-      // } else {
-      //   return AB;
-      // }
     } else if (t > 0.25 && t <= 0.5) {
       t -= 0.25;
       t *= 4;
@@ -662,18 +617,6 @@ async function main() {
       return BC;
     }
   }
-  // Testeeee Final
-
-  // webglLessonsUI.setupSlider("#x", {slide: updatePosition(0), min:-500, max: 500});
-  // webglLessonsUI.setupSlider("#y", {slide: updatePosition(1), min:-500, max: 500});
-  // webglLessonsUI.setupSlider("#z", {slide: updatePosition(2), min:-500, max: 500});
-  // webglLessonsUI.setupSlider("#r", {slide: updatePosition(3), min: 0, max: 1, step: 0.001, precision: 3});
-
-  // function updatePosition(index) {
-  //   return function(event, ui) {
-  //     cameraTarget[index] = ui.value;
-  //   };
-  // }
 
   webglLessonsUI.setupSlider("#r", {min: 0, max: 1, step: 0.001, precision: 3});
   webglLessonsUI.setupSlider("#tempo", {min: 0, max: 60, step: 0.1, precision: 1});
@@ -714,7 +657,6 @@ async function main() {
       });
   }
 
-
   const secondObjHref = './source/Drone/drone.obj';
   const secondObjResponse = await fetch(secondObjHref);
   const secondObjText = await secondObjResponse.text();
@@ -743,9 +685,8 @@ async function main() {
               material[key] = texture;
           });
   }
-  //Test third
+  
   const thirdObjHref = './source/Helicopter/heli.obj';
-  // const thirdObjHref = './source/Island/island.obj';
   const thirdObjResponse = await fetch(thirdObjHref);
   const thirdObjText = await thirdObjResponse.text();
   const thirdObj = parseOBJ(thirdObjText);
@@ -773,7 +714,6 @@ async function main() {
               material[key] = texture;
           });
   }
-  //test
 
   // hack the materials so we can see the specular map
   Object.values(materials).forEach(m => {
@@ -793,18 +733,6 @@ async function main() {
   };
 
   const parts = obj.geometries.map(({material, data}) => {
-    // Because data is just named arrays like this
-    //
-    // {
-    //   position: [...],
-    //   texcoord: [...],
-    //   normal: [...],
-    // }
-    //
-    // and because those names match the attributes in our vertex
-    // shader we can pass it directly into `createBufferInfoFromArrays`
-    // from the article "less code more fun".
-
     if (data.color) {
       if (data.position.length === data.color.length) {
         // it's 3. The our helper library assumes 4 so we need
@@ -890,7 +818,6 @@ async function main() {
     };
   });
 
-  // test third
   const thirdParts = thirdObj.geometries.map(({material, data}) => {
     if (data.color) {
       if (data.position.length === data.color.length) {
@@ -933,7 +860,6 @@ async function main() {
         vao,
     };
   });
-  //test
 
   function getExtents(positions) {
     const min = positions.slice(0, 3);
@@ -962,13 +888,8 @@ async function main() {
   }
 
   // Sliders 
-  // sliderPositions.X = document.querySelector('#x .gman-widget-value').textContent;
-  // sliderPositions.Y = document.querySelector('#y .gman-widget-value').textContent;
-  // sliderPositions.Z = document.querySelector('#z .gman-widget-value').textContent;
   sliderPositions.R = document.querySelector('#r .gman-widget-value').textContent;
   sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
-
-  //sliders
 
   const extents = getGeometriesExtents(obj.geometries);
   const range = m4.subtractVectors(extents.max, extents.min);
@@ -979,11 +900,8 @@ async function main() {
         m4.scaleVector(range, 0.5)),
       -1);
   const cameraTarget = calculateTangent(points, sliderPositions.R);
-  // figure out how far away to move the camera so we can likely
-  // see the object.
-  // const radius = m4.length(range) * 0.5;
   const cameraPosition = m4.addVectors(cameraTarget, calculatePoint(points, sliderPositions.R));
-  // const cameraPosition = calculatePoint(points, sliderPositions.R);
+
   // Set zNear and zFar to something hopefully appropriate
   // for the size of this object.
   // const zNear = radius / 100;
@@ -994,13 +912,6 @@ async function main() {
 
   function degToRad(deg) {
     return deg * Math.PI / 180;
-  }
-
-  function updatePosition() {
-    // const cameraTarget = calculateTangent(points, r);
-    const cameraPosition = calculatePoint(points, sliderPositions.R);
-    // return cameraPosition;
-    // requestAnimationFrame(render);
   }
 
   let secondObjTime = 0;
@@ -1016,10 +927,6 @@ async function main() {
     const fieldOfViewRadians = degToRad(60);
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     const projection = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
-
-    // if (sliderPositions.T != sliderPositions.R) {
-    //   sliderPositions.T = sliderPositions.R;
-    // };
 
     sliderPositions.R = document.querySelector('#r .gman-widget-value').textContent;
     sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
@@ -1061,18 +968,8 @@ async function main() {
       twgl.drawBufferInfo(gl, bufferInfo);
     }
 
-    //Teste sec
     secondObjTime += 0.01;
     thirdObjTime += 0.01;
-
-    // const extents = getGeometriesExtents(obj.geometries);
-    // const range = m4.subtractVectors(extents.max, extents.min);
-    // // amount to move the object so its center is at the origin
-    // const objOffset = m4.scaleVector(
-    //   m4.addVectors(
-    //     extents.min,
-    //     m4.scaleVector(range, 0.5)),
-    // -1);
 
     // Render the second object
     for (const { bufferInfo, vao, material } of secondParts) {
@@ -1109,7 +1006,6 @@ async function main() {
       );
       twgl.drawBufferInfo(gl, bufferInfo);
     }
-    //TESTE
 
     // // Start animation button
     // const startAnimateButton = document.getElementById("startAnimateButton");
