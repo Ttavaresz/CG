@@ -397,28 +397,20 @@ async function main() {
     tempo: 0
   }
 
-  // 10xvalor
   // const points = {
-  //   P0: [10, 0, 26],
-  //   P1: [2, 0, 23],
-  //   P2: [2, 0, 9],
-  //   P3: [8, -5, 2], // controle
-  //   P4: [14, -10, -5],
-  //   P5: [8, -5, -15],
-  //   P6: [0, -5, -15], // controle
-  //   P7: [-7, -5, -15],
-  //   P8: [-18, -10, -11],
-  //   P9: [-24, -15, 3], // controle
-  //   P10: [-29, -20, 18],
-  //   P11: [-21, -15, 39],
-  //   P12: [-8, -10, 22],
-  // };
-
-  // const secondObjPoints = {
-  //   P0: [100, 25, -90],
-  //   P1: [-20, 0, -50],
-  //   P2: [-90, 0, -10],
-  //   P3: [30, 15, 20],
+  //   P0: [100, 0, 260],
+  //   P1: [20, 0, 230],
+  //   P2: [20, 0, 90],
+  //   P3: [80, -50, 20], // controle
+  //   P4: [140, -100, -50],
+  //   P5: [80, -50, -150],
+  //   P6: [0, -50, -150], // controle
+  //   P7: [-70, -50, -150],
+  //   P8: [-180, -100, -110],
+  //   P9: [-240, -150, 30], // controle
+  //   P10: [-290, -200, 180],
+  //   P11: [-210, -150, 390],
+  //   P12: [-80, -100, 220],
   // };
 
   const points = {
@@ -432,8 +424,8 @@ async function main() {
     P7: [-70, -50, -150],
     P8: [-180, -100, -110],
     P9: [-240, -150, 30], // controle
-    P10: [-290, -200, 180],
-    P11: [-210, -150, 390],
+    P10: [-300, -200, 170],
+    P11: [-230, -150, 310],
     P12: [-80, -100, 220],
   };
 
@@ -442,6 +434,20 @@ async function main() {
     P1: [-200, 0, -500],
     P2: [-900, 0, -100],
     P3: [300, 150, 200],
+  };
+
+  // const thirdObjPoints = {
+  //   P0: [-125, 0, 200],
+  //   P1: [-100, 0, 100],
+  //   P2: [-75, 0, 0],
+  //   P3: [-50, 10, -100],
+  // };
+
+  const thirdObjPoints = {
+    P0: [-50, 20, 30],
+    P1: [-60, 10, 100],
+    P2: [-10, 4.4, 0],
+    P3: [10, 10, -100],
   };
 
   function secondCalculatePoint(secondObjPoints, t) {
@@ -461,6 +467,26 @@ async function main() {
     const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
 
     // return ABC.map(element => 10* + element);
+    return ABC;
+  }
+
+  function thirdCalculatePoint(thirdObjPoints, t) {
+    const startIndex = 0;
+    const X = thirdObjPoints[`P${startIndex}`];
+    const Y = thirdObjPoints[`P${startIndex + 1}`];
+    const Z = thirdObjPoints[`P${startIndex + 2}`];
+    const W = thirdObjPoints[`P${startIndex + 3}`];
+
+    const A = X.map((coord, index) => coord + t * (Y[index] - coord));
+    const B = Y.map((coord, index) => coord + t * (Z[index] - coord));
+    const C = Z.map((coord, index) => coord + t * (W[index] - coord));
+
+    const AB = A.map((coord, index) => coord + t * (B[index] - coord));
+    const BC = B.map((coord, index) => coord + t * (C[index] - coord));
+
+    const ABC = AB.map((coord, index) => coord + t * (BC[index] - coord));
+
+    // return ABC.map(element => 5* + element);
     return ABC;
   }
 
@@ -688,8 +714,7 @@ async function main() {
       });
   }
 
-  //Test sec
-  // const secondObjHref = './source/Helicopter-Yellow/EuroCompter.obj';
+
   const secondObjHref = './source/Drone/drone.obj';
   const secondObjResponse = await fetch(secondObjHref);
   const secondObjText = await secondObjResponse.text();
@@ -712,6 +737,36 @@ async function main() {
               let texture = textures[filename];
               if (!texture) {
                   const textureHref = new URL(filename, secondBaseHref).href;
+                  texture = twgl.createTexture(gl, { src: textureHref, flipY: true });
+                  textures[filename] = texture;
+              }
+              material[key] = texture;
+          });
+  }
+  //Test third
+  const thirdObjHref = './source/Helicopter/heli.obj';
+  // const thirdObjHref = './source/Island/island.obj';
+  const thirdObjResponse = await fetch(thirdObjHref);
+  const thirdObjText = await thirdObjResponse.text();
+  const thirdObj = parseOBJ(thirdObjText);
+  const thirdBaseHref = new URL(thirdObjHref, window.location.href);
+  const thirdMatTexts = await Promise.all(
+      thirdObj.materialLibs.map(async (filename) => {
+          const matHref = new URL(filename, thirdBaseHref).href;
+          const response = await fetch(matHref);
+          return await response.text();
+      })
+  );
+
+  const thirdMaterials = parseMTL(thirdMatTexts.join("\n"));
+
+  for (const material of Object.values(thirdMaterials)) {
+      Object.entries(material)
+          .filter(([key]) => key.endsWith("Map"))
+          .forEach(([key, filename]) => {
+              let texture = textures[filename];
+              if (!texture) {
+                  const textureHref = new URL(filename, thirdBaseHref).href;
                   texture = twgl.createTexture(gl, { src: textureHref, flipY: true });
                   textures[filename] = texture;
               }
@@ -792,7 +847,6 @@ async function main() {
     };
   });
 
-  //test sec
   const secondParts = secondObj.geometries.map(({material, data}) => {
     if (data.color) {
       if (data.position.length === data.color.length) {
@@ -835,6 +889,50 @@ async function main() {
         vao,
     };
   });
+
+  // test third
+  const thirdParts = thirdObj.geometries.map(({material, data}) => {
+    if (data.color) {
+      if (data.position.length === data.color.length) {
+        // it's 3. The our helper library assumes 4 so we need
+        // to tell it there are only 3.
+        data.color = { numComponents: 3, data: data.color };
+      }
+    } else {
+      // there are no vertex colors so just use constant white
+      data.color = { value: [1, 1, 1, 1] };
+    }
+
+    // generate tangents if we have the data to do so.
+    if (data.texcoord && data.normal) {
+      data.tangent = generateTangents(data.position, data.texcoord);
+    } else {
+      // There are no tangents
+      data.tangent = { value: [1, 0, 0] };
+    }
+
+    if (!data.texcoord) {
+      data.texcoord = { value: [0, 0] };
+    }
+
+    if (!data.normal) {
+      // we probably want to generate normals if there are none
+      data.normal = { value: [0, 0, 1] };
+    }
+
+    // create a buffer for each array by calling
+    // gl.createBuffer, gl.bindBuffer, gl.bufferData
+    const bufferInfo = twgl.createBufferInfoFromArrays(gl, data);
+    const vao = twgl.createVAOFromBufferInfo(gl, meshProgramInfo, bufferInfo);
+    return {
+        material: {
+            ...defaultMaterial,
+            ...thirdMaterials[material],
+        },
+        bufferInfo,
+        vao,
+    };
+  });
   //test
 
   function getExtents(positions) {
@@ -870,8 +968,6 @@ async function main() {
   sliderPositions.R = document.querySelector('#r .gman-widget-value').textContent;
   sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
 
-  sliderPositions.T = sliderPositions.R;
-
   //sliders
 
   const extents = getGeometriesExtents(obj.geometries);
@@ -894,7 +990,7 @@ async function main() {
   // const zFar = radius * 3;
 
   const zNear = 0.1;
-  const zFar = 500;
+  const zFar = 10000;
 
   function degToRad(deg) {
     return deg * Math.PI / 180;
@@ -908,6 +1004,7 @@ async function main() {
   }
 
   let secondObjTime = 0;
+  let thirdObjTime = 0;
 
   function render(time) {
     time *= 0.001;  // convert to seconds
@@ -928,7 +1025,6 @@ async function main() {
     sliderPositions.tempo = document.querySelector('#r .gman-widget-value').textContent;
     const cameraTarget = calculateTangent(points, sliderPositions.R);
     const cameraPosition = calculatePoint(points, sliderPositions.R);
-    // const cadeiraPosition = calculatePoint(points, sliderPositions.R);
 
     const up = [0, 1, 0];
     // Compute the camera's matrix using look at.
@@ -967,6 +1063,7 @@ async function main() {
 
     //Teste sec
     secondObjTime += 0.01;
+    thirdObjTime += 0.01;
 
     // const extents = getGeometriesExtents(obj.geometries);
     // const range = m4.subtractVectors(extents.max, extents.min);
@@ -980,16 +1077,26 @@ async function main() {
     // Render the second object
     for (const { bufferInfo, vao, material } of secondParts) {
       const scaledUWorld = m4.scale(u_world, 1, 1, 1);
-      // const xOffset = Math.sin(secondObjTime) * 35;
-      // const xOffset = addNegativeValues(secondCalculatePoint(secondObjPoints, sliderPositions.R));
       const xOffset = secondCalculatePoint(secondObjPoints, sliderPositions.R);
-      const initialX = 80; // Coloque um valor aqui para ajustar a posição ao longo do eixo X
-      const initialY = 60; // Coloque um valor aqui para ajustar a posição ao longo do eixo Y
-      // const initialZ = 220; // Coloque um valor aqui para ajustar a posição ao longo do eixo Z
-      // -8, -10, 22 | [10, 0, 26];
 
+      const translatedUWorld = m4.translate(scaledUWorld, ...xOffset);
 
-      // const translatedUWorld = m4.translate(scaledUWorld, initialX, initialY, xOffset);
+      gl.bindVertexArray(vao);
+      twgl.setUniforms(
+          meshProgramInfo,
+          {
+              u_world: translatedUWorld,
+          },
+          material
+      );
+      twgl.drawBufferInfo(gl, bufferInfo);
+    }
+
+    // Render the third object
+    for (const { bufferInfo, vao, material } of thirdParts) {
+      const scaledUWorld = m4.scale(u_world, 10, 10, 10);
+      const xOffset = thirdCalculatePoint(thirdObjPoints, sliderPositions.R);
+
       const translatedUWorld = m4.translate(scaledUWorld, ...xOffset);
 
       gl.bindVertexArray(vao);

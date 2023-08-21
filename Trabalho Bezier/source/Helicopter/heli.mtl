@@ -1,0 +1,204 @@
+# Blender MTL File: 'Eurocopter EC-135.blend'
+# Material Count: 17
+
+newmtl Black
+Ns 809.999997
+Ka 0.500000 0.500000 0.500000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd ./textures/black.png
+
+newmtl EC_135_10_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_10_c.png
+
+newmtl EC_135_1_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_1_c.png
+map_Ks ./textures/ec135_1_c.png
+
+newmtl EC_135_2_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_2_c.png
+map_Ks ./textures/ec135_2_c.png
+
+newmtl EC_135_3_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_3_c.png
+map_Ks ./textures/ec135_3_c.png
+
+newmtl EC_135_4_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_4_c.png
+map_Ks ./textures/ec135_4_c.png
+
+newmtl EC_135_5_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_5_c.png
+map_Ks ./textures/ec135_5_c.png
+
+newmtl EC_135_6_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_6_c.png
+map_Ks ./textures/ec135_6_c.png
+
+newmtl EC_135_7_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_7_c.png
+map_Ks ./textures/ec135_7_c.png
+
+newmtl EC_135_8_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_8_c.png
+map_Ks ./textures/ec135_8_c.png
+
+newmtl EC_135_9_C
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./textures/ec135_9_c.png
+map_Ks ./textures/ec135_9_c.png
+
+newmtl Glass
+Ns 809.999997
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.150000
+illum 9
+map_Bump ./textures/a.png
+map_Kd ./textures/a10a_glass.png
+
+newmtl TM_Light
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ./textures/tm_lights.png
+map_Ks ./textures/tm_lights.png
+
+newmtl TM_Temp_1
+Ns 809.999997
+Ka 0.500000 0.500000 0.500000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd ./textures/tm_temp1.png
+map_Ks ./textures/vehicle_generic_smallspecmap.png
+
+newmtl TM_Temp_2
+Ns 809.999997
+Ka 0.500000 0.500000 0.500000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd ./textures/tm_temp2.png
+map_Ks ./textures/vehicle_generic_smallspecmap.png
+
+newmtl TM_Temp_3
+Ns 809.999997
+Ka 0.500000 0.500000 0.500000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd ./textures/tm_temp3.png
+map_Ks ./textures/vehicle_generic_smallspecmap.png
+
+newmtl TM_Temp_4
+Ns 809.999997
+Ka 0.500000 0.500000 0.500000
+Kd 0.710000 0.710000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd ./textures/tm_temp4.png
+map_Ks ./textures/vehicle_generic_smallspecmap.png
