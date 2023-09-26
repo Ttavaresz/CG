@@ -543,10 +543,6 @@ async function main() {
     }
   }
 
-  function addNegativeValues(vector) {
-    return vector.map(element => - + element);
-  }
-
   function calculateTangent(points, t) {
     if (t <= 0.25) {
       t *= 4;
@@ -914,9 +910,6 @@ async function main() {
     return deg * Math.PI / 180;
   }
 
-  let secondObjTime = 0;
-  let thirdObjTime = 0;
-
   function render(time) {
     time *= 0.001;  // convert to seconds
 
@@ -967,9 +960,6 @@ async function main() {
       // calls gl.drawArrays or gl.drawElements
       twgl.drawBufferInfo(gl, bufferInfo);
     }
-
-    secondObjTime += 0.01;
-    thirdObjTime += 0.01;
 
     // Render the second object
     for (const { bufferInfo, vao, material } of secondParts) {

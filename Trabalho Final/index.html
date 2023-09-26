@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Trabalho Final</title>
+    </head>
+    <body>
+        <script>
+            var objectPositions = [
+                [-10, 40, 40],
+                [20, 25, 10],
+                [0, 15, 200],
+                [-15, 100, 280],
+                [10, 50, 20],
+            ];
+            var objs = objectPositions.map((position) => {
+                return {
+                    position, visible: true
+                }
+            });
+        </script>
+
+        <canvas id="canvas"></canvas>
+
+        <div class="aim">
+            <div class="horizontal-line"></div>
+            <div class="vertical-line"></div>
+            <div class="horizontal-line2"></div>
+            <div class="vertical-line2"></div>
+        </div>
+
+        <div id="shot-counter" class="shot-counter">Tiros: <span id="shot-count">5</span></div>
+
+        <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
+        <script src="https://webgl2fundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+
+        <script src="https://twgljs.org/dist/4.x/twgl-full.min.js"></script>
+
+        <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+        <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+        <script src="https://webglfundamentals.org/webgl/resources/primitives.js"></script>
+
+        <script src="camera.js"></script>
+        <script src="obj.js"></script>
+        <script src="sphere.js"></script>
+        <script src="terrain.js"></script>
+    </body>
+</html>

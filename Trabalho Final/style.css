@@ -1,0 +1,70 @@
+@import url("https://webgl2fundamentals.org/webgl/resources/webgl-tutorials.css");
+
+html, body {
+  cursor: none;
+}
+
+body {
+  margin: 0;
+}
+
+canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+.horizontal-line,
+.vertical-line,
+.horizontal-line2,
+.vertical-line2 {
+    background-color: red; /* Cor da mira (por exemplo, vermelho) */
+    position: absolute;
+}
+
+/* Linha horizontal */
+.horizontal-line {
+  width: 10px; /* Largura da linha horizontal */
+  height: 2px; /* Altura da linha horizontal */
+  top: 50%; /* Coloca a linha horizontal no centro vertical */
+  left: 50%; /* Coloca a linha horizontal no centro horizontal */
+  top: calc(50% - 1px);
+  left: calc(50% - 13px);
+}
+.horizontal-line2 {
+  width: 10px; /* Largura da linha horizontal */
+  height: 2px; /* Altura da linha horizontal */
+  top: 50%; /* Coloca a linha horizontal no centro vertical */
+  left: 50%; /* Coloca a linha horizontal no centro horizontal */
+  top: calc(50% - 1px);
+  left: calc(50% + 3px);
+}
+
+/* Linha vertical */
+.vertical-line {
+    width: 2px; /* Largura da linha vertical */
+    height: 10px; /* Altura da linha vertical */
+    top: 50%; /* Coloca a linha vertical no centro vertical */
+    left: 50%; /* Coloca a linha vertical no centro horizontal */
+    top: calc(50% - 13px);
+    left: calc(50% - 1px);
+}
+.vertical-line2 {
+  width: 2px; /* Largura da linha vertical */
+  height: 10px; /* Altura da linha vertical */
+  top: 50%; /* Coloca a linha vertical no centro vertical */
+  left: 50%; /* Coloca a linha vertical no centro horizontal */
+  top: calc(50% + 3px);
+  left: calc(50% - 1px);
+}
+
+/* Contador de esferas lançadas */
+.shot-counter {
+  position: absolute;
+  top: 10px; /* Ajuste a posição vertical conforme necessário */
+  right: 10px; /* Ajuste a posição horizontal conforme necessário */
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
